@@ -1,4 +1,4 @@
-﻿<Window x:Class="WPF_Brickstore.MainWindow"
+﻿ <Window x:Class="WPF_Brickstore.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="LEGO Készlet" Height="450" Width="800">
@@ -8,7 +8,10 @@
             <TextBox x:Name="NameFilter" Width="150" TextChanged="NameFilter_TextChanged"/>
             <Label Content="ID szűrés:"/>
             <TextBox x:Name="IDFilter" Width="150" TextChanged="IDFilter_TextChanged"/>
-            <Button Content="Fájl megnyitása" Click="OpenFile_Click"/>
+            <Label Content="Kategória szűrés:"/>
+            <TextBox x:Name="CatFilter" Width="150" TextChanged="CatFilter_TextChanged"/>
+            <ComboBox x:Name="Combo"></ComboBox>
+            <Button Content="Fájl megnyitása" Height="30px" VerticalAlignment="Top" Click="OpenFile_Click"/>
         </StackPanel>
 
         <DataGrid x:Name="DataGridItems" AutoGenerateColumns="True" Margin="10,40,10,10"/>
