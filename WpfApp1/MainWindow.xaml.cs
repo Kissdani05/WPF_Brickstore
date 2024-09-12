@@ -27,13 +27,18 @@ namespace WPF_Brickstore
                 {
                     ItemID = i.Element("ItemID")?.Value,
                     ItemName = i.Element("ItemName")?.Value,
-                    CategoryName = i.Element("Category")?.Value,
-                    ColorName = i.Element("Color")?.Value,
-                    Qty = i.Element("Qty")?.Value
+                    CategoryName = i.Element("CategoryName")?.Value,
+                    ColorName = i.Element("ColorName")?.Value,
+                    Qty = i.Element("OrigQty")?.Value
                 }).ToList();
 
-                DataGridItems.ItemsSource = itemList; 
+                DataGridItems.ItemsSource = itemList;
             }
+            else
+            {
+                MessageBox.Show("Nem sikerült fájlt megnyitni");
+            }
+            
         }
         private void NameFilter_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
         {
@@ -46,11 +51,19 @@ namespace WPF_Brickstore
         private void FilterItems()
         {
             var filteredItems = itemList.Where(i =>
-                (string.IsNullOrEmpty(NameFilter.Text) || i.ItemName?.StartsWith(NameFilter.Text) == true) &&
-                (string.IsNullOrEmpty(IDFilter.Text) || i.ItemID?.StartsWith(IDFilter.Text) == true)
+                (string.IsNullOrEmpty(NameFilter.Text) ||
+                 (i.ItemName != null && i.ItemName.IndexOf(NameFilter.Text, StringComparison.OrdinalIgnoreCase) >= 0)) &&
+                 (string.IsNullOrEmpty(IDFilter.Text) || i.ItemID?.StartsWith(IDFilter.Text) == true) &&
+                (string.IsNullOrEmpty(CatFilter.Text) ||
+                 (i.CategoryName != null && i.CategoryName.IndexOf(CatFilter.Text, StringComparison.OrdinalIgnoreCase) >= 0))
             ).ToList();
 
-            DataGridItems.ItemsSource = filteredItems; 
+            DataGridItems.ItemsSource = filteredItems;
+        }
+
+        private void CatFilter_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
+        {
+            FilterItems();
         }
     }
     public class BrickItem
